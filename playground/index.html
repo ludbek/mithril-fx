@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mithril-fx playground</title>
+  <link rel="stylesheet" type="text/css" href="../node_modules/animate.css/animate.min.css">
+  <script type="text/javascript" src="../node_modules/mithril/mithril.min.js"></script>
+  <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../node_modules/lodash/lodash.min.js"></script>
+  <script type="text/javascript" src="../dist/mithril.fx.js"></script>
+  <style type="text/css">
+    .fx {
+      animation-duration: 0.3s;
+    }
+
+    .fx.add {
+      animation-name: slideInUp;
+    }
+
+    .fx.remove {
+      animation-name: slideOutUp;
+    }
+  </style>
+</head>
+<body>
+<script type="text/javascript">
+  var Home = {
+    controller: function () {
+      return {
+        attach: true,
+        toggleAttach: function () {
+          console.log(this.attach)
+          this.attach = !this.attach
+          console.log(this.attach)
+        }
+      }
+    },
+    view: function (c) {
+      return m('div',
+        m('button', {onclick: c.toggleAttach.bind(c)}, "Load component"),
+        m('button', {onclick: c.toggleAttach.bind(c)}, "Remove component"),
+        c.attach? fx('h1', 'hui hui yo'): null)
+    }
+  }
+
+  m.route(document.body, "/", {
+    "/": Home
+  })
+</script>
+</body>

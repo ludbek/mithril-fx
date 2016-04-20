@@ -1,0 +1,32 @@
+{
+  "name": "mithril-fx",
+  "version": "0.1.0",
+  "description": "UI animation for Mithril.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ludbek/mithril-fx.git"
+  },
+  "keywords": [
+    "animation",
+    "ui",
+    "mithril"
+  ],
+  "author": "ludbek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ludbek/mithril-fx/issues"
+  },
+  "homepage": "https://github.com/ludbek/mithril-fx#readme",
+  "devDependencies": {
+    "webpack": "^1.13.0"
+  },
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "lodash": "^4.11.1",
+    "mithril": "^0.2.4"
+  }
+}
