@@ -9,16 +9,42 @@
   <script type="text/javascript" src="../node_modules/lodash/lodash.min.js"></script>
   <script type="text/javascript" src="../dist/mithril.fx.js"></script>
   <style type="text/css">
+    div.box  {
+      height: 70px;
+      width: 70px;
+      background-color: #f23;
+    }
+
     .fx {
       animation-duration: 0.3s;
     }
 
-    .fx.add {
-      animation-name: slideInUp;
+    .root.fx.mount {
+      animation-duration: 1s;
+      animation-name: slideInRight;
     }
 
-    .fx.remove {
-      animation-name: slideOutUp;
+    .fx.hide {
+      animation-name: bounceOut;
+    }
+
+    .fx.show {
+      animation-name: bounceIn;
+    }
+
+    h2.fx.mount {
+      animation-duration: 1s;
+      animation-name: fadeIn;
+    }
+    h2.fx.change {
+      animation-duration: 0.3s;
+      animation-name: shake;
+    }
+    h2.fx.move.high {
+      animation-name: slideInUp;
+    }
+    h2.fx.move.low {
+      animation-name: slideInDown;
     }
   </style>
 </head>
@@ -27,19 +53,42 @@
   var Home = {
     controller: function () {
       return {
-        attach: true,
-        toggleAttach: function () {
-          console.log(this.attach)
-          this.attach = !this.attach
-          console.log(this.attach)
+        display: true,
+        toggleDisplay: function () {
+          this.display = !this.display
+        },
+        data: [
+          {id: 1, name: "Sun"},
+          {id: 2, name: "Moon"},
+          {id: 3, name: "Earth"}],
+        addContent: function () {
+          this.data.unshift({
+            id: this.data.length + 1,
+            name: "New planet" + this.data.length})
+        },
+        changeContent: function () {
+          this.data[1].name = Date.now()
+        },
+        swapContents: function () {
+          var tmp = this.data[0]
+          this.data[0] = this.data[2]
+          this.data[2] = tmp
         }
       }
     },
     view: function (c) {
-      return m('div',
-        m('button', {onclick: c.toggleAttach.bind(c)}, "Load component"),
-        m('button', {onclick: c.toggleAttach.bind(c)}, "Remove component"),
-        c.attach? fx('h1', 'hui hui yo'): null)
+      return fx('.root',
+        m("h1", "TOGGLE ANIMATION"),
+        m("button", {onclick: c.toggleDisplay.bind(c)}, "Toggle"),
+        fx(c.display, "div.box", "Toggle this element."),
+        m("h1", "LIST"),
+        m("div",
+          m("button", {onclick: c.addContent.bind(c)}, "Add"),
+          m("button", {onclick: c.changeContent.bind(c)}, "Change"),
+          m("button", {onclick: c.swapContents.bind(c)}, "Swap")),
+        fx(c.data, function (planet) {
+          return m("h2", planet.name)
+        }))
     }
   }
 

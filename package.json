@@ -27,6 +27,8 @@
   "dependencies": {
     "jquery": "^2.2.3",
     "lodash": "^4.11.1",
-    "mithril": "^0.2.4"
+    "mithril": "^0.2.4",
+    "mithril-transition": "^3.0.0",
+    "mithril.exitable": "^1.1.2"
   }
 }
