@@ -1,5 +1,5 @@
-var webpack = require('webpack');
-var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+var webpack = require('webpack')
+var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin')
 
 module.exports = {
   target: 'web',
@@ -14,9 +14,8 @@ module.exports = {
     mithril: "m",
     jquery: "$",
     lodash: "_"
-  }
-  // },
-  // plugins: [
-  //   new UglifyJsPlugin()
-  // ]
-};
+  },
+  plugins: [
+    new UglifyJsPlugin()
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "mithril-fx",
+  "description": "UI animation for Mithril.js",
+  "main": "index.js",
+  "authors": [
+    "ludbek"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "animation",
+    "ui",
+    "mithril"
+  ],
+  "homepage": "https://github.com/ludbek/mithril-fx",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -2,8 +2,6 @@ var m = require('mithril')
 var _ = require('lodash')
 var $ = require('jquery')
 
-var noop = function () {}
-
 var getVDOM = function (args) {
   return m.apply(m, args)
 }
@@ -114,7 +112,7 @@ module.exports = function () {
         }
         else if ((ctx.index || ctx.index === 0) && ctx.index > index) {
           dom.addClass(moveHigh)
-            .one(events, function () {dom.removeClass(movieHigh)})
+            .one(events, function () {dom.removeClass(moveHigh)})
         }
         // if change in data
         if (ctx.data && !_.isEqual(ctx.data, data)) {
