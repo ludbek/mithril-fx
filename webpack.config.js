@@ -6,7 +6,7 @@ module.exports = {
   entry: './index.js',
   output: {
     path: __dirname + '/dist/',
-    filename: 'mithril.fx.js',
+    filename: 'mithril-fx.js',
     library: 'fx',
     libraryTarget: 'var'
   },

@@ -5,8 +5,8 @@
 ## Webpack
 `npm install mithril-fx`
 
-# Usage
-`var fx = require('mithril-fx')`
+## Bower
+`bower install mithril-fx`
 
 # Animations
 ```javascript
