@@ -15,11 +15,11 @@ var getArray = function (arrayLike) {
   return args
 }
 
-var events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'
+var events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend'
 
-module.exports = function () {
-  // fx(node, attrs, data)
-  if (_.isString(arguments[0]) && arguments.length >= 2) {
+module.exports = {
+  // fx.mount(node, attrs, data)
+  mount: function () {
     var vdom = getVDOM(arguments)
 
     var animate = function (el, initialized, ctx) {
@@ -37,9 +37,11 @@ module.exports = function () {
     }
 
     return m(vdom.tag, vdom.attrs, vdom.children)
-  }
-  // fx(boolean, node, attrs, data)
-  else if (_.isBoolean(arguments[0])) {
+  },
+
+  // fx.toggle(boolean, node, attrs, data)
+  toggle: function () {
+    if (!_.isBoolean(arguments[0])) throw "The first argument to fx.toggle must be a boolean value."
     var value = arguments[0]
     var vdom = getVDOM(getArray(arguments))
 
@@ -58,13 +60,13 @@ module.exports = function () {
 
       if (ctx.state === value) return
       if (value) {
-        var className = 'fx show'
+        var className = 'fx true'
         dom.css('display', 'block')
         dom.addClass(className)
           .one(events, function () {dom.removeClass(className)})
         }
       else {
-        var className = 'fx hide'
+        var className = 'fx false'
         dom.addClass(className)
           .one(events, function () {
             dom.removeClass(className)
@@ -82,9 +84,12 @@ module.exports = function () {
     }
 
     return m(vdom.tag, vdom.attrs, vdom.children)
-  }
-  // fx(array, callback)
-  else if(_.isArray(arguments[0], arguments.length === 2)) {
+  },
+
+  // fx.map(array, callback)
+  map: function () {
+    if (!_.isArray(arguments[0])) throw "The first argument to fx.map() must be an array."
+    if (!_.isFunction(arguments[1])) throw "The second argument to fx.map() must be a function."
     var data = arguments[0], callback = arguments[1]
 
     var elements = _.map(data, callback)
@@ -135,5 +140,33 @@ module.exports = function () {
 
       return delement
     })
+  },
+
+  change: function () {
+    var value = arguments[0]
+    var vdom = getVDOM(getArray(arguments))
+
+    var animate = function (el, initialized, ctx)  {
+      if (ctx.state === value) return
+
+      var dom = $(el)
+      var changeClass = 'fx change'
+
+      if (ctx.state && !_.isEqual(ctx.data, value)) {
+        dom.addClass(changeClass)
+          .one(events, function () {dom.removeClass(changeClass)})
+      }
+
+      ctx.state = _.clone(value, true)
+    }
+
+    var originalConfig = vdom.attrs.config
+    vdom.attrs.config = function (el, init, ctx, dom) {
+      if (originalConfig) originalConfig.call(vdom, el, init, ctx, dom)
+      animate.call(vdom, el, init, ctx, dom)
+    }
+
+    return m(vdom.tag, vdom.attrs, vdom.children)
+
   }
 }

@@ -13,13 +13,16 @@
 var fx = require('mithril-fx')
 
 // Mount - animates fresh element being attached to DOM
-fx(tag, attrs, data)
+fx.mount(tag, attrs, children)
 
-// Toggle - animates an element based upon the a boolean value
-fx(boolean, tag, attrs, data)
+// Toggle - animates an element based upon a boolean value
+fx.toggle(boolean, tag, attrs, children)
 
-// List - animates elements being added, changed, moved
-fx(list, callback)
+// Data change - animates when data bound to an element changes
+fx.change(data, tag, attrs, children)
+
+// Array - animates elements being added, changed, moved
+fx.map(array, callback)
 ```
 
 # TODO

@@ -7,12 +7,16 @@
   <script type="text/javascript" src="../node_modules/mithril/mithril.min.js"></script>
   <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="../node_modules/lodash/lodash.min.js"></script>
-  <script type="text/javascript" src="../dist/mithril.fx.js"></script>
+  <script type="text/javascript" src="../dist/mithril-fx.js"></script>
   <style type="text/css">
     div.box  {
       height: 70px;
       width: 70px;
       background-color: #f23;
+    }
+
+    .list {
+      position: relative;
     }
 
     .fx {
@@ -24,11 +28,11 @@
       animation-name: slideInRight;
     }
 
-    .fx.hide {
+    .fx.false {
       animation-name: bounceOut;
     }
 
-    .fx.show {
+    .fx.true {
       animation-name: bounceIn;
     }
 
@@ -38,11 +42,18 @@
     h2.fx.change {
       animation-name: shake;
     }
-    h2.fx.move.high {
+    h2 {
+      /*transition:top 1s linear;*/
+    }
+    .list h2.fx.move.high {
       animation-name: slideInUp;
     }
-    h2.fx.move.low {
+    .list h2.fx.move.low {
       animation-name: slideInDown;
+    }
+
+    h3.date.fx.change {
+      animation-name: shake;
     }
   </style>
 </head>
@@ -55,6 +66,7 @@
         toggleDisplay: function () {
           this.display = !this.display
         },
+        date: Date.now(),
         data: [
           {id: 1, name: "Sun"},
           {id: 2, name: "Moon"},
@@ -69,24 +81,31 @@
         },
         swapContents: function () {
           var tmp = this.data[0]
-          this.data[0] = this.data[2]
-          this.data[2] = tmp
+          this.data[0] = this.data[1]
+          this.data[1] = tmp
+        },
+        changeData: function () {
+          this.date = Date.now()
         }
       }
     },
     view: function (c) {
-      return fx('.root',
+      return fx.mount('.root',
         m("h1", "TOGGLE ANIMATION"),
         m("button", {onclick: c.toggleDisplay.bind(c)}, "Toggle"),
-        fx(c.display, "div.box", "Toggle this element."),
+        fx.toggle(c.display, "div.box", "Toggle this element."),
+        m("h1", "CHANGE IN DATA"),
+        m("button", {onclick: c.changeData.bind(c)}, "Change"),
+        fx.change(c.date, "h3.date", c.date),
         m("h1", "LIST"),
         m("div",
           m("button", {onclick: c.addContent.bind(c)}, "Add"),
           m("button", {onclick: c.changeContent.bind(c)}, "Change"),
           m("button", {onclick: c.swapContents.bind(c)}, "Swap")),
-        fx(c.data, function (planet) {
+        m(".list",
+          fx.map(c.data, function (planet) {
           return m("h2", planet.name)
-        }))
+        })))
     }
   }
 
