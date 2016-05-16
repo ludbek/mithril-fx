@@ -88,9 +88,10 @@ module.exports = {
 
   // fx.map(array, callback)
   map: function () {
+    var parent
     if (!_.isArray(arguments[0])) throw "The first argument to fx.map() must be an array."
     if (!_.isFunction(arguments[1])) throw "The second argument to fx.map() must be a function."
-    var data = arguments[0], callback = arguments[1]
+    var data = arguments[0], callback = arguments[1], delay = arguments[2] || 0
 
     var elements = _.map(data, callback)
 
@@ -107,8 +108,16 @@ module.exports = {
 
         // for addition of element
         if(!initialized) {
+          parent = parent || dom.parent()
+          $.data(parent, 'freshCount', $.data(parent, 'freshCount') + 1 || 0)
+          freshCount = $.data(parent, 'freshCount')
+
+          dom.css('animation-delay', (freshCount-1) * delay + "s")
           dom.addClass(addClass)
-            .one(events, function () {dom.removeClass(addClass)})
+            .one(events, function () {
+                dom.css('animation-delay', "")
+                dom.removeClass(addClass)
+            })
         }
         // for element move
         if ((ctx.index || ctx.index === 0) && ctx.index < index) {

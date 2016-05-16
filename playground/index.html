@@ -37,6 +37,7 @@
     }
 
     h2.fx.mount {
+      animation-fill-mode: backwards;
       animation-name: fadeIn;
     }
     h2.fx.change {
@@ -75,6 +76,12 @@
           this.data.unshift({
             id: this.data.length + 1,
             name: "New planet" + this.data.length})
+          this.data.unshift({
+            id: this.data.length + 2,
+            name: "New planet" + this.data.length})
+          this.data.unshift({
+            id: this.data.length + 3,
+            name: "New planet" + this.data.length})
         },
         changeContent: function () {
           this.data[1].name = Date.now()
@@ -90,7 +97,7 @@
       }
     },
     view: function (c) {
-      return fx.mount('.root',
+      return m('.root',
         m("h1", "TOGGLE ANIMATION"),
         m("button", {onclick: c.toggleDisplay.bind(c)}, "Toggle"),
         fx.toggle(c.display, "div.box", "Toggle this element."),
@@ -105,7 +112,7 @@
         m(".list",
           fx.map(c.data, function (planet) {
           return m("h2", planet.name)
-        })))
+        }, 0.1)))
     }
   }
 
