@@ -1,6 +1,6 @@
 {
   "name": "mithril-fx",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "UI animation for Mithril.js",
   "main": "index.js",
   "scripts": {
@@ -27,8 +27,6 @@
   "dependencies": {
     "jquery": "^2.2.3",
     "lodash": "^4.11.1",
-    "mithril": "^0.2.4",
-    "mithril-transition": "^3.0.0",
-    "mithril.exitable": "^1.1.2"
+    "mithril": "^0.2.4"
   }
 }
