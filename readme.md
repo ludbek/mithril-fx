@@ -24,6 +24,11 @@ fx.mount(tag, attrs, children)
 // Adds '.fx.flase' class on flase
 fx.toggle(boolean, tag, attrs, children)
 
+// Show/Hide - shows or hides an element based upon a boolean value
+// Adds '.fx.show' class on true
+// Adds '.fx.hide' class on flase
+fx.showHide(boolean, tag, attrs, children)
+
 // Data change - animates when data bound to an element changes
 // Adds '.fx.change' class on change in data
 fx.change(data, tag, attrs, children)

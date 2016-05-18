@@ -39,8 +39,8 @@ module.exports = {
     return m(vdom.tag, vdom.attrs, vdom.children)
   },
 
-  // fx.toggle(boolean, node, attrs, data)
-  toggle: function () {
+  // fx.showHide(boolean, node, attrs, data)
+  showHide: function () {
     if (!_.isBoolean(arguments[0])) throw "The first argument to fx.toggle must be a boolean value."
     var value = arguments[0]
     var vdom = getVDOM(getArray(arguments))
@@ -60,8 +60,44 @@ module.exports = {
 
       if (ctx.state === value) return
       if (value) {
-        var className = 'fx true'
+        var className = 'fx show'
         dom.css('display', 'block')
+        dom.addClass(className)
+          .one(events, function () {dom.removeClass(className)})
+        }
+      else {
+        var className = 'fx hide'
+        dom.addClass(className)
+          .one(events, function () {
+            dom.removeClass(className)
+            dom.css('display', 'none')
+          })
+        }
+
+      ctx.state = value
+    }
+
+    var originalConfig = vdom.attrs.config
+    vdom.attrs.config = function (el, init, ctx, dom) {
+      if (originalConfig) originalConfig.call(vdom, el, init, ctx, dom)
+      animate.call(vdom, el, init, ctx, dom)
+    }
+
+    return m(vdom.tag, vdom.attrs, vdom.children)
+  },
+
+  // fx.toggle(boolean, node, attrs, data)
+  toggle: function () {
+    if (!_.isBoolean(arguments[0])) throw "The first argument to fx.toggle must be a boolean value."
+    var value = arguments[0]
+    var vdom = getVDOM(getArray(arguments))
+
+    var animate = function (el, initialized, ctx)  {
+      var dom = $(el)
+
+      if (ctx.state === value) return
+      if (value) {
+        var className = 'fx true'
         dom.addClass(className)
           .one(events, function () {dom.removeClass(className)})
         }
@@ -70,7 +106,6 @@ module.exports = {
         dom.addClass(className)
           .one(events, function () {
             dom.removeClass(className)
-            dom.css('display', 'none')
           })
         }
 
