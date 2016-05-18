@@ -8,6 +8,9 @@
 ## Bower
 `bower install mithril-fx`
 
+# Demo
+Checkout this [fiddle](https://jsfiddle.net/ludbek/b57etjoc/).
+
 # Animations
 ```javascript
 var fx = require('mithril-fx')
