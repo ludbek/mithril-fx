@@ -41,7 +41,7 @@ module.exports = {
 
   // fx.showHide(boolean, node, attrs, data)
   showHide: function () {
-    if (!_.isBoolean(arguments[0])) throw "The first argument to fx.toggle must be a boolean value."
+    if (!_.isBoolean(arguments[0])) throw "The first argument to fx.showHide must be a boolean value."
     var value = arguments[0]
     var vdom = getVDOM(getArray(arguments))
 
@@ -91,22 +91,20 @@ module.exports = {
     if (!_.isBoolean(arguments[0])) throw "The first argument to fx.toggle must be a boolean value."
     var value = arguments[0]
     var vdom = getVDOM(getArray(arguments))
+    var trueClass = 'fx true'
+    var falseClass = 'fx false'
 
     var animate = function (el, initialized, ctx)  {
       var dom = $(el)
 
       if (ctx.state === value) return
       if (value) {
-        var className = 'fx true'
-        dom.addClass(className)
-          .one(events, function () {dom.removeClass(className)})
+        dom.removeClass(falseClass)
+        dom.addClass(trueClass)
         }
       else {
-        var className = 'fx false'
-        dom.addClass(className)
-          .one(events, function () {
-            dom.removeClass(className)
-          })
+        dom.removeClass(trueClass)
+        dom.addClass(falseClass)
         }
 
       ctx.state = value

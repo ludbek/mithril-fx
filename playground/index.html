@@ -36,6 +36,16 @@
       animation-name: bounceIn;
     }
 
+    .fx.true {
+        transition: background-color 0.5s ease;
+        background-color: #f00;
+    }
+
+    .fx.false {
+        transition: background-color 0.5s ease;
+        background-color: #fff;
+    }
+
     h2.fx.mount {
       animation-fill-mode: backwards;
       animation-name: fadeIn;
@@ -64,6 +74,10 @@
     controller: function () {
       return {
         display: true,
+        red: true,
+        toggleColor: function () {
+          this.red = !this.red;
+        },
         toggleDisplay: function () {
           this.display = !this.display
         },
@@ -98,7 +112,10 @@
     },
     view: function (c) {
       return fx.mount('.root',
-        m("h1", "TOGGLE ANIMATION"),
+        m("h1", "Toggle ANIMATION"),
+        m("button", {onclick: c.toggleColor.bind(c)}, "Toggle"),
+        fx.toggle(c.red, "div.box", "Toggle color of this element."),
+        m("h1", "Show/hide ANIMATION"),
         m("button", {onclick: c.toggleDisplay.bind(c)}, "Toggle"),
         fx.showHide(c.display, "div.box", "Toggle this element."),
         m("h1", "CHANGE IN DATA"),
