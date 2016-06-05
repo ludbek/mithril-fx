@@ -1,5 +1,5 @@
 # Introduction
-`ng-animate` inspired tiny css animation package for `Mithril.js`.
+[ng-animate](https://docs.angularjs.org/api/ngAnimate) inspired tiny css animation package for [Mithril.js](http://mithril.js.org/).
 
 # Installation
 ## Webpack
@@ -18,6 +18,11 @@ var fx = require('mithril-fx')
 // Mount - animates fresh element being attached to DOM
 // Adds '.fx.mount' class upon mount
 fx.mount(tag, attrs, children)
+
+// Unmount - animates element being detached from DOM
+// Adds '.fx.unmount' class upon unmount
+// Unlike other methods this has to be called in an event handler
+fx.unmount(element)
 
 // Toggle - animates an element based upon a boolean value
 // Adds '.fx.true' class on true
@@ -45,6 +50,5 @@ fx.map(array, callback, delay)
 ```
 
 # TODO
-- support javascript animation
-- animation for element being removed
+- ~~animation for element being removed~~
 

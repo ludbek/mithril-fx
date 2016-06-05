@@ -24,8 +24,13 @@
     }
 
     .fx.mount {
-      animation-duration: 1s;
+      animation-duration: .5s;
       animation-name: slideInRight;
+    }
+
+    .fx.unmount {
+      animation-duration: .5s;
+      animation-name: slideOutLeft;
     }
 
     .fx.hide {
@@ -107,11 +112,18 @@
         },
         changeData: function () {
           this.date = Date.now()
+        },
+        navTo2: function (e) {
+          e.preventDefault();
+          fx.unmount(this.root);
+          m.route("/2");
         }
       }
     },
     view: function (c) {
-      return fx.mount('.root',
+      return fx.mount('.root', {config: function (el) {c.root = el;}},
+        m("h1", "Mount/Unmount Animation"),
+        m("a[href=/2]", {onclick: c.navTo2.bind(c)}, "page 2"),
         m("h1", "Toggle ANIMATION"),
         m("button", {onclick: c.toggleColor.bind(c)}, "Toggle"),
         fx.toggle(c.red, "div.box", "Toggle color of this element."),
@@ -133,8 +145,16 @@
     }
   }
 
+  var Page2 = {
+    controller: function () {},
+    view: function () {
+      return fx.mount("h1", "Welcome to page 2");
+    }
+  }
+
   m.route(document.body, "/", {
-    "/": Home
+    "/": Home,
+    "/2": Page2
   })
 </script>
 </body>
