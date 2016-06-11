@@ -2,7 +2,7 @@
 [ng-animate](https://docs.angularjs.org/api/ngAnimate) inspired tiny css animation package for [Mithril.js](http://mithril.js.org/).
 
 # Installation
-## Webpack
+## npm
 `npm install mithril-fx`
 
 ## Bower
